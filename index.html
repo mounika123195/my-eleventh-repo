@@ -1,57 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title> CalmMood</title>
-  <style>
-    body {
-      text-align: center;
-      font-family: sans-serif;
-      transition: background 2s;
-      background: #f0f8ff;
-    }
-    h1 { color: #333; }
-    .circle {
-      margin: 20px auto;
-      width: 100px; height: 100px;
-      background: #fff;
-      border-radius: 50%;
-      transition: transform 4s ease-in-out;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DevOps Lifecycle — Interactive Walkthrough</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h1> CalmMood</h1>
-  <div class="circle" id="circle"></div>
-  <p>Click the button to start a calming cycle & change your mood color</p>
-  <button id="startBtn">Breathe & Change Mood</button>
-  <p id="stats"></p>
+  <header class="container header">
+    <h1>🔁 DevOps Lifecycle — Interactive Walkthrough</h1>
+    <p class="sub">Click any step to learn what happens and see it highlighted in the diagram. Use Play to auto-walk.</p>
+  </header>
 
-  <script>
-    const colors = ["#ffadad","#ffd6a5","#fdffb6","#caffbf","#9bf6ff","#a0c4ff","#bdb2ff"];
-    let sessions = +localStorage.getItem("sessions") || 0;
-    const circle = document.getElementById("circle");
-    const stats = document.getElementById("stats");
+  <main class="container grid">
+    <!-- Left: Steps & details -->
+    <section class="panel steps" aria-label="DevOps steps">
+      <div class="progress">
+        <div id="progressBar" class="bar"></div>
+      </div>
 
-    function updateStats(){
-      stats.textContent = `Total calming sessions: ${sessions}`;
-    }
-    updateStats();
+      <ol id="stepList" class="step-list" aria-live="polite"></ol>
 
-    document.getElementById("startBtn").onclick = () => {
-      document.body.style.background = colors[Math.floor(Math.random()*colors.length)];
-      circle.style.transform = "scale(1.5)";
-      setTimeout(()=>circle.style.transform = "scale(1)", 4000);
-      sessions++;
-      localStorage.setItem("sessions", sessions);
-      updateStats();
-    };
-  </script>
+      <div class="controls">
+        <button id="prevBtn" class="btn ghost" title="Previous step">◀ Prev</button>
+        <button id="nextBtn" class="btn" title="Next step">Next ▶</button>
+        <button id="playBtn" class="btn primary" title="Play all">▶ Play All</button>
+      </div>
+    </section>
+
+    <!-- Right: Circular diagram + explanation -->
+    <section class="panel diagram" aria-label="Lifecycle diagram">
+      <div class="ring-wrap">
+        <div class="ring" id="ring">
+          <div class="center">DevOps<br/>Lifecycle</div>
+          <div class="node" data-step="0" id="node0"><span>Plan</span></div>
+          <div class="node" data-step="1" id="node1"><span>Code</span></div>
+          <div class="node" data-step="2" id="node2"><span>Build</span></div>
+          <div class="node" data-step="3" id="node3"><span>Test</span></div>
+          <div class="node" data-step="4" id="node4"><span>Release</span></div>
+          <div class="node" data-step="5" id="node5"><span>Deploy</span></div>
+          <div class="node" data-step="6" id="node6"><span>Operate</span></div>
+          <div class="node" data-step="7" id="node7"><span>Monitor</span></div>
+        </div>
+      </div>
+
+      <div class="desc">
+        <h3 id="stepTitle">Plan</h3>
+        <p id="stepDesc">Define goals, requirements and backlog items for the product or feature.</p>
+        <ul id="stepTools" class="tools"></ul>
+      </div>
+
+      <p id="toast" class="toast" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <small>Interactive DevOps walkthrough • Vanilla JS • CSS animations</small>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
